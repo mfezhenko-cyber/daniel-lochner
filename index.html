@@ -103,13 +103,14 @@ h2.display.wide{max-width:none;font-size:clamp(1.45rem,2.4vw,2.15rem);line-heigh
 .slide-head{flex:none}
 .slide:nth-child(3) .slide-head{padding-top:1.5rem}
 
-.depth{display:grid;grid-template-columns:1.25fr 1fr;gap:1.5rem;margin-top:1.8rem;align-items:start}
-.depth-rows{background:var(--paper);border-radius:var(--rc);padding:.5rem 1.7rem 1.2rem;box-shadow:var(--shadow)}
-.drow{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--line-soft)}
+.depth{display:grid;grid-template-columns:1.25fr 1fr;gap:1.5rem;margin-top:1.8rem;align-items:stretch}
+.depth-rows{background:var(--paper);border-radius:var(--rc);padding:1rem 1.9rem;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;justify-content:center}
+.drow{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--line-soft)}
 .drow:last-child{border-bottom:none}
-.drow .dk{font-size:14px;color:var(--ink-soft);line-height:1.4}
-.drow .dk small{display:block;color:var(--faint);font-size:11.5px;margin-top:3px}
-.drow .dv{font-family:var(--font-d);font-size:1.75rem;font-weight:700;color:var(--ink);line-height:1;white-space:nowrap}
+.drow .dk{font-size:15.5px;color:var(--ink-soft);line-height:1.4}
+.drow .dk small{display:block;color:var(--faint);font-size:12.5px;margin-top:4px}
+.drow .dv{font-family:var(--font-d);font-size:2.1rem;font-weight:700;color:var(--ink);line-height:1;white-space:nowrap}
 .drow.hi .dv{background:var(--lime);border-radius:.3em;padding:.06em .26em}
 .geo{background:var(--dark);border-radius:var(--rc);padding:1.6rem 1.7rem;color:#eef1f4;box-shadow:var(--shadow)}
 .geo .cap{margin-bottom:1rem}
@@ -245,12 +246,9 @@ h2.display.wide{max-width:none;font-size:clamp(1.45rem,2.4vw,2.15rem);line-heigh
     </div>
     <div class="depth">
       <div class="depth-rows">
-        <div class="drow hi"><div class="dk">Worked or work in hospitality by role and employer<small>confirmed in the CV, not just a profile keyword</small></div><div class="dv">9,297</div></div>
-        <div class="drow"><div class="dk">Hotels and resorts specifically<small>excluding travel &amp; tourism</small></div><div class="dv">8,192</div></div>
         <div class="drow hi"><div class="dk">Sales, BD and commercial directors in hospitality<small>1,080 of them inside hotels</small></div><div class="dv">1,194</div></div>
         <div class="drow hi"><div class="dk">Marketing in hospitality<small>164 of them digital, performance, e-commerce or distribution</small></div><div class="dv">1,045</div></div>
         <div class="drow"><div class="dk">Hotel owners, founders and GMs<small>your buyer persona, inside our network</small></div><div class="dv">742</div></div>
-        <div class="drow"><div class="dk">Revenue management, RevPAR and yield<small>your own discipline</small></div><div class="dv">69</div></div>
       </div>
       <div class="depth-side">
       <div class="geo">
@@ -359,6 +357,29 @@ h2.display.wide{max-width:none;font-size:clamp(1.45rem,2.4vw,2.15rem);line-heigh
 
   <section class="slide">
     <div class="slide-head">
+      <div class="kicker">The offer · <span class="dim">one package, one fee</span></div>
+      <h2 class="display">One flat fee — and your <span class="accent-green">downside is capped</span></h2>
+    </div>
+    <div class="offer-grid">
+      <div class="obig">
+        <div class="oeyebrow">Business Growth Package</div>
+        <div class="oprice">$499</div>
+        <div class="otitle">One-time fee for a fully managed solution</div>
+        <div class="osub">We diagnose the problem, you get the exact expertise to fix it</div>
+      </div>
+      <div class="ochecks">
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Full business diagnostic to find your main blocker</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Custom strategy tailored to your market</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Top 3 vetted experts ready to solve your challenge</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Dedicated Growth Partner to manage the process</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Full month of Intch access included</span></div>
+      </div>
+    </div>
+    <div class="footline"><div class="bar"></div><div>No match in your niche means a full refund, and month one comes with a free replacement. <span class="accent-green">Your worst case is $0 and two weeks.</span></div></div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
       <h2 class="display">Your <span class="accent-green">options</span></h2>
     </div>
     <div class="cmp-grid">
@@ -413,78 +434,6 @@ h2.display.wide{max-width:none;font-size:clamp(1.45rem,2.4vw,2.15rem);line-heigh
     <div class="footline cmp-note"><div class="bar"></div><div>Any option can fill a seat. <span class="accent-green">Only one of them read your business first and came back with six names from your niche.</span></div></div>
   </section>
 
-  <section class="slide center">
-    <div class="slide-head">
-      <div class="kicker gold">The real cost · <span class="dim">traditional agencies</span></div>
-    </div>
-    <div class="wow-grid">
-      <div>
-        <div class="bignum-wrap">
-          <div class="bignum" id="bignum">—</div>
-          <div class="bignum-lbl">is what a traditional agency could bill you at 10–20% of salary, across your roles.</div>
-        </div>
-        <div class="teaser">Intch charges one flat fee — no matter the salary. <span class="accent-green">Here's what that changes →</span></div>
-      </div>
-      <div class="wow-calc">
-        <div class="cap">Traditional agency cost</div>
-        <div class="calc-grid">
-          <div class="field full">
-            <label>Role level</label>
-            <div class="seg" id="seg-level">
-              <button data-v="entry">Entry</button>
-              <button class="on" data-v="senior">Senior</button>
-              <button data-v="manager">Manager</button>
-            </div>
-          </div>
-          <div class="field full">
-            <label>Currency</label>
-            <div class="seg" id="seg-cur">
-              <button class="on" data-v="USD">USD</button>
-              <button data-v="EUR">EUR</button>
-              <button data-v="GBP">GBP</button>
-            </div>
-          </div>
-          <div class="field">
-            <label>Monthly salary</label>
-            <input id="salary" type="number" value="6000" min="0">
-          </div>
-          <div class="field">
-            <label>Number of roles</label>
-            <input id="hires" type="number" value="2" min="1">
-          </div>
-        </div>
-        <div class="results">
-          <div class="row"><div class="k">Agency fee per role<small>10–20% of annual salary</small></div><div class="v" id="agencyPerRole">—</div></div>
-          <div class="row"><div class="k" id="rolesLbl">× 2 roles</div><div class="v" id="agencyTotal">—</div></div>
-          <div class="disc">Estimates for comparison only. Salary-based fees rise with pay; a flat fee never does. Currency conversion approximate.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="slide">
-    <div class="slide-head">
-      <div class="kicker">The offer · <span class="dim">one package, one fee</span></div>
-      <h2 class="display">One flat fee — and your <span class="accent-green">downside is capped</span></h2>
-    </div>
-    <div class="offer-grid">
-      <div class="obig">
-        <div class="oeyebrow">Business Growth Package</div>
-        <div class="oprice">$499</div>
-        <div class="otitle">One-time fee for a fully managed solution</div>
-        <div class="osub">We diagnose the problem, you get the exact expertise to fix it</div>
-      </div>
-      <div class="ochecks">
-        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Full business diagnostic to find your main blocker</span></div>
-        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Custom strategy tailored to your market</span></div>
-        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Top 3 vetted experts ready to solve your challenge</span></div>
-        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Dedicated Growth Partner to manage the process</span></div>
-        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Full month of Intch access included</span></div>
-      </div>
-    </div>
-    <div class="footline"><div class="bar"></div><div>No match in your niche means a full refund, and month one comes with a free replacement. <span class="accent-green">Your worst case is $0 and two weeks.</span></div></div>
-  </section>
-
 </div>
 
 <div class="nav">
@@ -518,34 +467,6 @@ document.addEventListener('keydown',e=>{
 });
 go(0);
 
-const rates={USD:1,EUR:0.92,GBP:0.79};
-const sym={USD:'$',EUR:'€',GBP:'£'};
-let cur='USD';
-function bindSeg(id,cb){
-  const wrap=document.getElementById(id);
-  wrap.addEventListener('click',e=>{
-    const b=e.target.closest('button');if(!b)return;
-    [...wrap.children].forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');cb(b.dataset.v);calc();
-  });
-}
-bindSeg('seg-level',()=>{});
-bindSeg('seg-cur',v=>cur=v);
-document.getElementById('salary').addEventListener('input',calc);
-document.getElementById('hires').addEventListener('input',calc);
-function fmt(n){return sym[cur]+Math.round(n).toLocaleString('en-US');}
-function calc(){
-  const monthly=Math.max(0,+document.getElementById('salary').value||0);
-  const hires=Math.max(1,Math.floor(+document.getElementById('hires').value||1));
-  const annual=monthly*12;
-  const perLow=annual*0.10, perHigh=annual*0.20;
-  const totLow=perLow*hires, totHigh=perHigh*hires;
-  document.getElementById('bignum').textContent='up to '+fmt(totHigh);
-  document.getElementById('agencyPerRole').textContent=fmt(perLow)+' – '+fmt(perHigh);
-  document.getElementById('agencyTotal').textContent=fmt(totLow)+' – '+fmt(totHigh);
-  document.getElementById('rolesLbl').textContent='× '+hires+(hires===1?' role':' roles');
-}
-calc();
 </script>
 </body>
 </html>
