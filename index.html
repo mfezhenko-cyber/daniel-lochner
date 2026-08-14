@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intch × Daniel Lochner — Candidates Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#13161b;
+  --ink-soft:#3b414c;
+  --muted:#6b7280;
+  --faint:#9aa2ad;
+  --canvas:#eef0f2;
+  --paper:#ffffff;
+  --lime:#c6f24a;
+  --lime-deep:#4d6b00;
+  --lime-soft:#eef9cf;
+  --dark:#13161b;
+  --line:#e4e7ea;
+  --line-soft:#edeff2;
+  --rc:26px;
+  --shadow:0 14px 44px -22px rgba(19,22,27,.26);
+  --font-d:'Space Grotesk',sans-serif;
+  --font-b:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font-b);color:var(--ink);background:var(--canvas);-webkit-font-smoothing:antialiased;overflow:hidden}
+.deck{position:relative;height:100vh;width:100vw;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:clamp(2.6rem,5.5vh,4.2rem) clamp(2.6rem,6vw,6rem) clamp(5rem,9vh,6.5rem);
+  overflow-y:auto;animation:fade .45s ease}
+.slide.active{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.kicker{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+  background:var(--lime);padding:6px 14px;border-radius:999px;margin-bottom:1.2rem}
+.kicker.gold{background:var(--ink);color:#fff}
+.kicker .dim{opacity:.6;font-weight:600}
+h1.display{font-family:var(--font-d);font-weight:600;line-height:1.16;letter-spacing:-.02em;font-size:clamp(2rem,3.8vw,3.3rem);max-width:22ch}
+h2.display{font-family:var(--font-d);font-weight:600;line-height:1.32;letter-spacing:-.02em;font-size:clamp(1.7rem,3vw,2.5rem);max-width:26ch}
+h2.display.wide{max-width:none;font-size:clamp(1.45rem,2.4vw,2.15rem);line-height:1.3}
+.accent-green,.accent-gold{background:var(--lime);color:var(--ink);padding:.04em .3em;border-radius:.32em;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rule{width:60px;height:5px;background:var(--lime);margin:1.3rem 0 0;border-radius:3px}
+.lead{font-size:clamp(15px,1.2vw,18px);color:var(--muted);line-height:1.55;max-width:66ch;margin-top:1.3rem}
+.lead strong{color:var(--ink);font-weight:700}
+
+.footline{display:flex;align-items:center;gap:1rem;font-size:14.5px;color:var(--ink);margin-top:2.2rem}
+.footline .bar{width:5px;height:22px;background:var(--lime);border-radius:3px;flex:none}
+.footline .accent-green,.footline .accent-gold{font-weight:700;padding:.04em .28em}
+
+.nav{position:fixed;left:50%;bottom:clamp(1.4rem,3vh,2rem);transform:translateX(-50%);z-index:50;
+  display:flex;align-items:center;gap:1rem;background:var(--ink);padding:8px 10px;border-radius:999px;box-shadow:var(--shadow)}
+.nav button{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#fff;
+  font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.16s}
+.nav button:hover{background:var(--lime);color:var(--ink)}
+.nav button:disabled{opacity:.3;cursor:default;background:rgba(255,255,255,.1);color:#fff}
+.nav .count{font-family:var(--font-d);font-size:15px;color:#fff;min-width:48px;text-align:center;font-weight:500}
+.dots{position:fixed;top:clamp(1.7rem,3.5vh,2.3rem);left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:8px}
+.dots span{width:8px;height:8px;border-radius:50%;background:#c9cdd2;transition:.2s}
+.dots span.on{background:var(--ink);width:22px;border-radius:5px}
+.brandmark{position:fixed;top:clamp(1.6rem,3.5vh,2.2rem);left:clamp(2.6rem,6vw,6rem);z-index:40;font-size:13.5px;font-weight:700;color:var(--ink)}
+.brandmark span{color:var(--faint);font-weight:600}
+.conf{position:fixed;top:clamp(1.6rem,3.5vh,2.2rem);right:clamp(2.6rem,6vw,6rem);z-index:40;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+.cover{justify-content:center}
+.cover .eyebrow{display:inline-block;align-self:flex-start;font-size:13px;font-weight:700;color:var(--ink);background:var(--lime);padding:7px 16px;border-radius:999px;margin-bottom:1.8rem}
+.cover h1{font-family:var(--font-d);font-weight:700;font-size:clamp(2.6rem,6vw,5rem);line-height:1.22;letter-spacing:-.03em;max-width:20ch}
+.cover .sub{font-size:clamp(16px,1.35vw,20px);color:var(--muted);margin-top:1.9rem;max-width:58ch;line-height:1.55}
+.cover .meta{margin-top:2.8rem;display:flex;gap:1rem;flex-wrap:wrap}
+.cover .meta > div{background:var(--paper);border-radius:20px;padding:1.1rem 1.5rem;box-shadow:var(--shadow);min-width:150px}
+.cover .meta .n{font-family:var(--font-d);font-size:2.4rem;font-weight:700;color:var(--ink);line-height:1}
+.cover .meta .l{font-size:13px;color:var(--muted);margin-top:.45rem;line-height:1.35}
+
+.prio-list{display:flex;flex-direction:column;gap:1.1rem;margin-top:2.2rem}
+.prio{display:grid;grid-template-columns:70px 1fr 1fr;gap:1.6rem;align-items:center;background:var(--paper);
+  border-radius:var(--rc);padding:1.4rem 1.8rem;box-shadow:var(--shadow)}
+.prio .num{font-family:var(--font-d);font-size:1.5rem;font-weight:700;color:var(--ink);width:52px;height:52px;
+  background:var(--lime);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.prio .t{font-size:18px;font-weight:700;color:var(--ink)}
+.prio .d{font-size:14px;color:var(--muted);margin-top:.4rem;line-height:1.45}
+.prio .need{border-left:1px solid var(--line);padding-left:1.6rem}
+.prio .need .lbl{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.prio .need .who{font-size:15px;color:var(--ink);margin-top:.45rem;line-height:1.4;font-weight:600}
+
+.cards{display:grid;gap:1.3rem;margin-top:2rem;margin-bottom:.6rem}
+.cards.two{grid-template-columns:1fr 1fr}
+.cards.three{grid-template-columns:1fr 1fr 1fr}
+.card{background:var(--paper);border-radius:var(--rc);padding:1.7rem 1.7rem 1.8rem;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.card h3{font-family:var(--font-d);font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:.9rem 0 1rem}
+.tag{font-size:11.5px;font-weight:600;color:var(--ink-soft);background:var(--canvas);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.alsomatched{font-size:13.5px;color:var(--muted);margin-top:1.2rem}
+.alsomatched b{color:var(--ink);font-weight:700}
+.verdict{font-family:var(--font-d);font-size:16px;font-weight:600;color:var(--ink);line-height:1.42;margin:.95rem 0 0}
+.proof{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--line-soft)}
+.proof b{color:var(--ink-soft);font-weight:600}
+.proof .plbl{display:block;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:.4rem}
+.slide-head{flex:none}
+.slide:nth-child(3) .slide-head{padding-top:1.5rem}
+
+.depth{display:grid;grid-template-columns:1.25fr 1fr;gap:1.5rem;margin-top:1.8rem;align-items:start}
+.depth-rows{background:var(--paper);border-radius:var(--rc);padding:.5rem 1.7rem 1.2rem;box-shadow:var(--shadow)}
+.drow{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--line-soft)}
+.drow:last-child{border-bottom:none}
+.drow .dk{font-size:14px;color:var(--ink-soft);line-height:1.4}
+.drow .dk small{display:block;color:var(--faint);font-size:11.5px;margin-top:3px}
+.drow .dv{font-family:var(--font-d);font-size:1.75rem;font-weight:700;color:var(--ink);line-height:1;white-space:nowrap}
+.drow.hi .dv{background:var(--lime);border-radius:.3em;padding:.06em .26em}
+.geo{background:var(--dark);border-radius:var(--rc);padding:1.6rem 1.7rem;color:#eef1f4;box-shadow:var(--shadow)}
+.geo .cap{margin-bottom:1rem}
+.grow{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.grow:last-of-type{border-bottom:none}
+.grow .gk{color:#c3c8d0}
+.grow .gv{font-family:var(--font-d);font-weight:600;color:#fff;white-space:nowrap}
+.geo .disc{font-size:11.5px;color:#828d9a;margin-top:1rem;line-height:1.45}
+.depth-side{display:flex;flex-direction:column;gap:1.4rem}
+.honest{background:var(--lime-soft);border-radius:18px;padding:1.1rem 1.3rem;font-size:14px;line-height:1.5;color:var(--ink)}
+.honest .hl{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--lime-deep);display:block;margin-bottom:.4rem}
+
+.cmp-grid{display:grid;grid-template-columns:130px 1.15fr 1fr 1fr 1fr;margin-top:1.4rem;background:var(--paper);border-radius:var(--rc);max-height:58vh;overflow-y:auto;box-shadow:var(--shadow)}
+.cmp-grid > div{padding:13px 16px;border-top:1px solid var(--line-soft);font-size:12.5px;line-height:1.45;color:var(--muted)}
+.cmp-grid .hd{position:sticky;top:0;z-index:2;background:var(--paper);border-top:none;font-family:var(--font-d);font-weight:600;font-size:13px;color:var(--ink);padding-top:18px;padding-bottom:16px}
+.cmp-grid .hd small{display:block;font-family:var(--font-b);font-weight:500;color:var(--faint);font-size:11px;margin-top:3px}
+.cmp-grid .rl{font-weight:700;color:var(--ink)}
+.cmp-grid .ic{background:var(--lime-soft);color:var(--ink);font-weight:600}
+.cmp-grid .hd.ic{background:var(--lime)}
+.cmp-note{margin-top:1.2rem}
+
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-top:1.7rem;align-items:stretch}
+.offer-grid + .footline{margin-top:1.5rem}
+.obig{background:var(--dark);border-radius:var(--rc);padding:2rem 2.1rem;color:#fff;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;justify-content:center}
+.obig .oeyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.obig .oprice{font-family:var(--font-d);font-size:clamp(3.2rem,6vw,4.6rem);font-weight:700;line-height:1;
+  letter-spacing:-.03em;color:var(--lime);margin:.8rem 0 1.6rem}
+.obig .otitle{font-size:17px;font-weight:700;color:#fff;line-height:1.4}
+.obig .osub{font-size:15px;color:#aab2bc;line-height:1.5;margin-top:.5rem}
+.ochecks{background:var(--lime-soft);border-radius:var(--rc);padding:1.7rem 2rem;display:flex;flex-direction:column;
+  justify-content:center;gap:1.1rem;text-align:center}
+.ochecks .oitem{display:flex;flex-direction:column;align-items:center;gap:.55rem}
+.ochecks .obadge{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--lime);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.ochecks .otext{font-size:15.5px;color:var(--ink);line-height:1.35;max-width:26ch}
+.pricing{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-top:2.1rem}
+.pcard{background:var(--paper);border-radius:var(--rc);padding:2rem 1.9rem;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative}
+.pcard.feat{background:var(--ink);color:#fff}
+.pbadge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--lime);color:var(--ink);font-size:11.5px;font-weight:700;padding:6px 16px;border-radius:999px;white-space:nowrap}
+.pcard .pt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pcard.feat .pt{color:var(--lime)}
+.pcard .pp{display:flex;align-items:baseline;gap:.4rem;margin:.8rem 0 .4rem}
+.pcard .pp .a{font-family:var(--font-d);font-size:3rem;font-weight:700;line-height:1;color:var(--ink)}
+.pcard.feat .pp .a{color:#fff}
+.pcard .pp .u{font-size:14px;color:var(--muted)}
+.pcard.feat .pp .u{color:#aeb4bd}
+.pcard .pd{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:1.2rem}
+.pcard.feat .pd{color:#c3c8d0}
+.pbtn{margin-top:1.5rem;text-align:center;font-size:14.5px;font-weight:700;padding:14px;border-radius:999px;cursor:pointer}
+.pbtn.ghost{border:1.5px solid var(--line);color:var(--ink);background:var(--paper)}
+.pbtn.solid{background:var(--lime);color:var(--ink)}
+
+.inc-list{display:flex;flex-direction:column;gap:.75rem;margin-top:.2rem}
+.inc-list li{list-style:none;display:flex;gap:.65rem;font-size:13.5px;line-height:1.4;color:var(--ink)}
+.pcard.feat .inc-list li{color:#e7eaee}
+.inc-list li .ck{color:var(--lime-deep);font-weight:800;flex:none}
+.pcard.feat .inc-list li .ck{color:var(--lime)}
+.inc-list li.gift .ck{color:var(--lime-deep)}
+
+.bignum-wrap{display:flex;flex-direction:column;align-items:flex-start;margin-top:.4rem}
+.bignum{font-family:var(--font-d);font-size:clamp(3.6rem,8.5vw,6.5rem);font-weight:700;line-height:.95;letter-spacing:-.03em;color:var(--ink)}
+.bignum-lbl{font-size:15.5px;color:var(--muted);margin-top:.9rem;max-width:40ch;line-height:1.5}
+.wow-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2.8rem;margin-top:1.8rem;align-items:center}
+.teaser{margin-top:1.8rem;font-size:15.5px;color:var(--ink);font-weight:700;line-height:1.5}
+.wow-calc{background:var(--dark);border-radius:var(--rc);padding:1.8rem 1.9rem;color:#eef1f4;box-shadow:var(--shadow)}
+.cap{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.1rem;margin-top:1.1rem}
+.field{display:flex;flex-direction:column;gap:.45rem}
+.field.full{grid-column:1/-1}
+.field label{font-size:12px;color:#aab2bc;font-weight:500}
+.seg{display:flex;gap:7px}
+.seg button{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#dfe4ea;
+  font-size:12.5px;padding:9px 4px;border-radius:10px;cursor:pointer;font-family:inherit;transition:.15s}
+.seg button.on{background:var(--lime);border-color:var(--lime);color:var(--ink);font-weight:700}
+.field input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;
+  color:#fff;font-size:15px;padding:10px 13px;font-family:inherit;width:100%}
+.field input:focus{outline:none;border-color:var(--lime)}
+.results{margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.14)}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:.6rem 0;font-size:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.row .k{color:#aab2bc}
+.row .k small{display:block;color:#7b8794;font-size:11px}
+.row .v{font-weight:700;color:#fff;font-family:var(--font-d)}
+.disc{font-size:11.5px;color:#828d9a;margin-top:1rem;line-height:1.45}
+
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:2.4rem}
+.step{background:var(--paper);border-radius:var(--rc);padding:1.6rem 1.5rem;box-shadow:var(--shadow)}
+.step .sn{font-family:var(--font-d);font-size:1.2rem;font-weight:700;color:var(--ink);width:44px;height:44px;background:var(--lime);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.step .when{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime-deep);margin:.9rem 0 .5rem}
+.step .st{font-family:var(--font-d);font-size:15.5px;font-weight:600;color:var(--ink);line-height:1.25}
+.step .sd{font-size:13px;color:var(--muted);margin-top:.55rem;line-height:1.5}
+.cta{margin-top:2.1rem;display:inline-flex;align-items:center;gap:.7rem;background:var(--lime);color:var(--ink);
+  font-size:15.5px;font-weight:700;padding:15px 28px;border-radius:999px;align-self:flex-start}
+.cta .arw{background:var(--ink);color:var(--lime);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.slide.center{justify-content:center}
+.timeline.t3{grid-template-columns:repeat(3,1fr)}
+.pbtn{transition:.15s}
+.pbtn:hover{transform:translateY(-1px);opacity:.92}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.6rem;width:100%}
+.stat{background:var(--paper);border-radius:var(--rc);padding:2.2rem 1.9rem;box-shadow:var(--shadow)}
+.stat.feat{background:var(--ink)}
+.stat .sv{font-family:var(--font-d);font-size:clamp(2.6rem,4.6vw,4rem);font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--ink)}
+.stat.feat .sv{color:var(--lime)}
+.stat .sl{font-size:14px;color:var(--muted);margin-top:.9rem;line-height:1.45}
+.stat.feat .sl{color:#c3c8d0}
+.stats-note{margin-top:5.5rem;font-size:16px;font-weight:600;color:var(--ink);line-height:1.55;max-width:72ch}
+
+@media (max-width:900px){
+  .cmp-grid{grid-template-columns:110px repeat(4,1fr);font-size:11px}
+  .pricing,.wow-grid,.prio,.cards.two,.cards.three,.depth{grid-template-columns:1fr}
+  .prio .need{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:.9rem}
+  .timeline{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="brandmark">Intch <span>×</span> Daniel Lochner</div>
+<div class="conf">Confidential</div>
+<div class="dots" id="dots"></div>
+<div class="deck" id="deck">
+
+  <!-- 1 COVER -->
+  <section class="slide active cover">
+    <h1>Hotel Commercial Strategy × Intch<br><span class="accent-gold">Candidates Research</span></h1>
+    <p class="sub">A pipeline that does not depend on who you already know — prepared for Daniel, after our call on 13 August.</p>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
+      <div class="kicker gold">Your question · <span class="dim">"do you even have people in my niche?"</span></div>
+      <h2 class="display wide">We ran your niche against the whole base. <span class="accent-green">9,297 people have a hotel track in their CV</span></h2>
+      <p class="lead">Not a profile keyword — we parsed every job entry in every CV, job title plus employer. <strong>Here is what came back:</strong></p>
+    </div>
+    <div class="depth">
+      <div class="depth-rows">
+        <div class="drow hi"><div class="dk">Worked or work in hospitality by role and employer<small>confirmed in the CV, not just a profile keyword</small></div><div class="dv">9,297</div></div>
+        <div class="drow"><div class="dk">Hotels and resorts specifically<small>excluding travel &amp; tourism</small></div><div class="dv">8,192</div></div>
+        <div class="drow hi"><div class="dk">Sales, BD and commercial directors in hospitality<small>1,080 of them inside hotels</small></div><div class="dv">1,194</div></div>
+        <div class="drow hi"><div class="dk">Marketing in hospitality<small>164 of them digital, performance, e-commerce or distribution</small></div><div class="dv">1,045</div></div>
+        <div class="drow"><div class="dk">Hotel owners, founders and GMs<small>your buyer persona, inside our network</small></div><div class="dv">742</div></div>
+        <div class="drow"><div class="dk">Revenue management, RevPAR and yield<small>your own discipline</small></div><div class="dv">69</div></div>
+      </div>
+      <div class="depth-side">
+      <div class="geo">
+        <div class="cap">Where they are · your two markets first</div>
+        <div class="grow"><div class="gk">United States</div><div class="gv">235 sales · 193 marketing</div></div>
+        <div class="grow"><div class="gk">United Kingdom</div><div class="gv">32 · 29</div></div>
+        <div class="grow"><div class="gk">Spain</div><div class="gv">26 · 22</div></div>
+        <div class="grow"><div class="gk">UAE</div><div class="gv">26 · 30</div></div>
+        <div class="grow"><div class="gk">Italy</div><div class="gv">14 · 16</div></div>
+        <div class="grow"><div class="gk">Greece</div><div class="gv">11 · 11</div></div>
+        <div class="grow"><div class="gk">Türkiye</div><div class="gv">14 · 8</div></div>
+        <div class="disc">Counted from the location on each CV entry. 466 sales and 394 marketing profiles have no country recorded, so every number above is a floor, not a ceiling.</div>
+      </div>
+      <div class="honest"><span class="hl">Where we will not oversell you</span>Dedicated hospitality <b>SEO</b> specialists are a handful in our base, and hospitality paid-search job titles number in the dozens — not hundreds. If organic search is the priority, tell us and we will say honestly whether to hire for it here. Hotel <b>sales</b> and hotel-facing <b>marketing</b> are where the depth actually is.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
+      <h2 class="display">Every client you have today came from <span class="accent-green">someone you already knew</span></h2>
+      <p class="lead">That is a ceiling, not a funnel. You said it plainly: there is no channel reaching hotel owners you have never met. <strong>Two ways to break that — and we mapped both against our base:</strong></p>
+    </div>
+    <div class="prio-list">
+      <div class="prio">
+        <div class="num">1</div>
+        <div><div class="t">Salespeople who already know hotel owners</div><div class="d">Instead of building your network, borrow someone else's — a seller who has been selling to hotel owners and GMs for a decade.</div></div>
+        <div class="need"><div class="lbl">Who you need</div><div class="who">Hands-on hotel sales, own quota, own book of owners — not a VP who builds departments.</div></div>
+      </div>
+      <div class="prio">
+        <div class="num">2</div>
+        <div><div class="t">Marketing that brings hotel owners to you</div><div class="d">Inbound demand where the buyer is the owner or asset manager — the audience your consulting is sold to.</div></div>
+        <div class="need"><div class="lbl">Who you need</div><div class="who">A hands-on marketer from a company that sells <em>to</em> hotels — not one that markets rooms to guests.</div></div>
+      </div>
+    </div>
+    <div class="footline"><div class="bar"></div><div>Your success bar was three leads and one close a month. <span class="accent-green">Both routes are built to clear it.</span></div></div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
+      <div class="kicker">Priority 1 · <span class="dim">salespeople who already know hotel owners</span></div>
+      <h2 class="display wide">Three sellers whose <span class="accent-green">entire career has been selling inside hotels</span></h2>
+      <p class="lead">You do not need a growth department. You need one person who dials, meets and closes — and whose phone already has hotel decision-makers in it. <strong>Two in the US, one in Europe:</strong></p>
+    </div>
+    <div class="cards three">
+      <div class="card">
+        <h3>Senior Sales Manager, group sales</h3>
+        <div class="tags"><span class="tag">Peregrine Hospitality</span><span class="tag">KSL Resorts</span><span class="tag">Hilton Orlando</span><span class="tag">Florida, US</span></div>
+        <p class="verdict">Gives you a US seller who has never done anything but carry his own hotel quota — no team to build, he works the phone from week one.</p>
+        <div class="proof"><span class="plbl">Proof</span>10+ years of group sales. Senior Sales Manager @ <b>Peregrine Hospitality</b>; Interim Sales &amp; BD Manager @ <b>KSL Resorts</b>; Senior Sales Manager @ Lake Nona Wave Hotel; Complex Sales Manager @ <b>Hilton Orlando Lake Buena Vista &amp; Buena Vista Palace</b>. Individual contributor throughout — not one line about running a department.</div>
+      </div>
+      <div class="card">
+        <h3>Director of Sales → commercial strategy lead</h3>
+        <div class="tags"><span class="tag">Four Seasons</span><span class="tag">Marriott Autograph</span><span class="tag">Kimpton</span><span class="tag">Texas / Louisiana, US</span></div>
+        <p class="verdict">Sells your service in your buyer's own language — she has owned the rooms P&amp;L your consulting is hired to improve.</p>
+        <div class="proof"><span class="plbl">Proof</span>DOS @ <b>Four Seasons New Orleans</b> — "personally drove 43% growth in the Group segment". DOS @ <b>The Adolphus, Marriott Autograph</b> — +14,000 group room nights, Group ADR +$32.25. DOSM @ <b>Kimpton Fontenot</b> — $14M rooms revenue budget, 235-room luxury hotel. DOS @ Hotel Granduca, pre-opening.</div>
+      </div>
+      <div class="card">
+        <h3>Multi-property sales lead, now founder</h3>
+        <div class="tags"><span class="tag">Baglioni Hotels</span><span class="tag">Maybourne</span><span class="tag">Waldorf Astoria Rome</span><span class="tag">London / Rome, EU</span></div>
+        <p class="verdict">Covers your European clients with a book built across nine hotels at a time — and she is already selling for herself, so commission is a familiar deal.</p>
+        <div class="proof"><span class="plbl">Proof</span>Regional Sales Manager UK &amp; Ireland @ <b>Baglioni Hotels</b> — 9 hotels across Italy, France and the UK; corporate, leisure and MICE accounts. Senior Sales Manager @ <b>Maybourne</b> (Claridge's, The Connaught, The Berkeley). DOS @ <b>Rome Cavalieri, Waldorf Astoria</b>. BD Manager @ The May Fair, Radisson Edwardian. Now Founder &amp; CEO of her own hospitality company.</div>
+      </div>
+    </div>
+    <div class="footline"><div class="bar"></div><div>All three sell hands-on, all three sold to hotels — <span class="accent-green">and there are 1,194 more like them in the base.</span></div></div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
+      <div class="kicker">Priority 2 · <span class="dim">marketing that brings hotel owners to you</span></div>
+      <h2 class="display wide">Marketers whose audience <span class="accent-gold">has always been hoteliers, not hotel guests</span></h2>
+      <p class="lead">The obvious search — hotel marketers — is the wrong one: they create demand for rooms among travellers. You need demand for a service among owners. <strong>These three marketed to your exact buyer:</strong></p>
+    </div>
+    <div class="cards three">
+      <div class="card">
+        <h3>Performance marketer, hotel-tech platform</h3>
+        <div class="tags"><span class="tag">Triptease</span><span class="tag">Google Ads</span><span class="tag">Lisbon, EU</span></div>
+        <p class="verdict">Runs paid acquisition where every click has to convert a hotelier — the one profile in our base who has done that hands-on.</p>
+        <div class="proof"><span class="plbl">Proof</span><b>Triptease</b> is a direct-booking platform sold to hotels. Core specialisation in Google Ads: data-backed strategy, precise targeting, continuous optimisation. <b>Flag we are not hiding:</b> associate level — he executes campaigns well, you or a senior set the strategy.</div>
+      </div>
+      <div class="card">
+        <h3>Group revenue &amp; e-commerce manager</h3>
+        <div class="tags"><span class="tag">Doryssa Hotels &amp; Resorts</span><span class="tag">myhotelshop</span><span class="tag">Athens, EU</span></div>
+        <p class="verdict">Has already stood in front of hotel owners and sold them growth in direct revenue — that is your pitch, delivered by someone who has made it before.</p>
+        <div class="proof"><span class="plbl">Proof</span>Group Revenue &amp; E-commerce Manager @ <b>Doryssa Hotels &amp; Resorts</b> — online presence, revenue and distribution across 6 properties. Revenue &amp; E-Commerce Manager @ SECRET HOTELS. BD Manager Greece @ <b>myhotelshop</b> — metasearch CPC campaigns and "advising hoteliers on how to increase their direct bookings". Sales &amp; Marketing Executive @ Novotel Athens.</div>
+      </div>
+      <div class="card">
+        <h3>Senior marketing manager, US resorts</h3>
+        <div class="tags"><span class="tag">Kingwood International Resort</span><span class="tag">Reunion Resort</span><span class="tag">Orlando, US</span></div>
+        <p class="verdict">Builds and runs the whole inbound stack alone — site, paid, email — so your funnel exists without you hiring three people.</p>
+        <div class="proof"><span class="plbl">Proof</span>Ten years hands-on in US resorts. Sr. Marketing Manager @ <b>Kingwood International Resort</b>. Digital then Senior Marketing Manager @ <b>Reunion Resort &amp; Golf Club</b> — website CMS, paid social, reputation management. Webmaster &amp; Digital Strategist @ <b>Exploria Resorts</b> — websites, paid social, email. <b>Flag:</b> his CV lists scope, not lead numbers.</div>
+      </div>
+    </div>
+    <p class="alsomatched"><b>Also matched, on the SEO question you raised:</b> an Associate Director of SEO from <b>NextGuest / Cendyn</b> — the hospitality digital agency — based in New York. Held in reserve, available if you want to test organic.</p>
+  </section>
+
+  <section class="slide center">
+    <h2 class="display">And this is <span class="accent-green">&lt;0.01%</span> of us</h2>
+    <div class="stats">
+      <div class="stat"><div class="sv">6</div><div class="sl">matches you saw today</div></div>
+      <div class="stat"><div class="sv">9,297</div><div class="sl">profiles with a confirmed hotel track we screened them from</div></div>
+      <div class="stat feat"><div class="sv">700,000+</div><div class="sl">vetted experts in our network</div></div>
+    </div>
+    <p class="stats-note">These are the first six, hand-picked from your niche — <span class="accent-green">whatever role you open next, the right person is already inside.</span></p>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
+      <h2 class="display">Your <span class="accent-green">options</span></h2>
+    </div>
+    <div class="cmp-grid">
+      <div class="hd"></div>
+      <div class="hd ic">Intch<small>Networking + AI + part/full-time</small></div>
+      <div class="hd">Traditional agencies<small>Headhunters, retained search</small></div>
+      <div class="hd">Job boards<small>LinkedIn, Indeed</small></div>
+      <div class="hd">AI-recruiting<small>Moonhub, Eightfold</small></div>
+
+      <div class="rl">Pricing</div>
+      <div class="ic">One-time flat fee — $499</div>
+      <div>10–20% of salary or retainer</div>
+      <div>Subscription or pay per post</div>
+      <div>Subscription + % / enterprise</div>
+
+      <div class="rl">Cost</div>
+      <div class="ic">A fraction of a hire</div>
+      <div>High, grows with salary</div>
+      <div>Cheap, but costs your time</div>
+      <div>Expensive, often ~$100K/yr</div>
+
+      <div class="rl">Speed</div>
+      <div class="ic">Days — placed in under 3 weeks</div>
+      <div>Weeks to months</div>
+      <div>Depends on who replies</div>
+      <div>Fast, but long setup</div>
+
+      <div class="rl">Niche depth</div>
+      <div class="ic">9,297 hospitality CVs, parsed job by job</div>
+      <div>Deep, if the firm happens to be hospitality</div>
+      <div>Unfiltered — you read every CV yourself</div>
+      <div>Keyword matching, weak on niche history</div>
+
+      <div class="rl">Who does the work</div>
+      <div class="ic">We source &amp; pre-screen for you</div>
+      <div>A recruiter middleman</div>
+      <div>You do all of it</div>
+      <div>A tool — you still recruit</div>
+
+      <div class="rl">Vetting</div>
+      <div class="ic">Peer reviews + references</div>
+      <div>Varies by firm</div>
+      <div>None — raw applications</div>
+      <div>Algorithm scoring</div>
+
+      <div class="rl">If it does not work</div>
+      <div class="ic">Replacement in month one, or your money back</div>
+      <div>Partial rebate, often credit only</div>
+      <div>Your spend is gone</div>
+      <div>Contract runs to term</div>
+    </div>
+    <div class="footline cmp-note"><div class="bar"></div><div>Any option can fill a seat. <span class="accent-green">Only one of them read your business first and came back with six names from your niche.</span></div></div>
+  </section>
+
+  <section class="slide center">
+    <div class="slide-head">
+      <div class="kicker gold">The real cost · <span class="dim">traditional agencies</span></div>
+    </div>
+    <div class="wow-grid">
+      <div>
+        <div class="bignum-wrap">
+          <div class="bignum" id="bignum">—</div>
+          <div class="bignum-lbl">is what a traditional agency could bill you at 10–20% of salary, across your roles.</div>
+        </div>
+        <div class="teaser">Intch charges one flat fee — no matter the salary. <span class="accent-green">Here's what that changes →</span></div>
+      </div>
+      <div class="wow-calc">
+        <div class="cap">Traditional agency cost</div>
+        <div class="calc-grid">
+          <div class="field full">
+            <label>Role level</label>
+            <div class="seg" id="seg-level">
+              <button data-v="entry">Entry</button>
+              <button class="on" data-v="senior">Senior</button>
+              <button data-v="manager">Manager</button>
+            </div>
+          </div>
+          <div class="field full">
+            <label>Currency</label>
+            <div class="seg" id="seg-cur">
+              <button class="on" data-v="USD">USD</button>
+              <button data-v="EUR">EUR</button>
+              <button data-v="GBP">GBP</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Monthly salary</label>
+            <input id="salary" type="number" value="6000" min="0">
+          </div>
+          <div class="field">
+            <label>Number of roles</label>
+            <input id="hires" type="number" value="2" min="1">
+          </div>
+        </div>
+        <div class="results">
+          <div class="row"><div class="k">Agency fee per role<small>10–20% of annual salary</small></div><div class="v" id="agencyPerRole">—</div></div>
+          <div class="row"><div class="k" id="rolesLbl">× 2 roles</div><div class="v" id="agencyTotal">—</div></div>
+          <div class="disc">Estimates for comparison only. Salary-based fees rise with pay; a flat fee never does. Currency conversion approximate.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-head">
+      <div class="kicker">The offer · <span class="dim">one package, one fee</span></div>
+      <h2 class="display">One flat fee — and your <span class="accent-green">downside is capped</span></h2>
+    </div>
+    <div class="offer-grid">
+      <div class="obig">
+        <div class="oeyebrow">Business Growth Package</div>
+        <div class="oprice">$499</div>
+        <div class="otitle">One-time fee for a fully managed solution</div>
+        <div class="osub">We diagnose the problem, you get the exact expertise to fix it</div>
+      </div>
+      <div class="ochecks">
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Full business diagnostic to find your main blocker</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Custom strategy tailored to your market</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Top 3 vetted experts ready to solve your challenge</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Dedicated Growth Partner to manage the process</span></div>
+        <div class="oitem"><span class="obadge">&#10003;</span><span class="otext">Full month of Intch access included</span></div>
+      </div>
+    </div>
+    <div class="footline"><div class="bar"></div><div>No match in your niche means a full refund, and month one comes with a free replacement. <span class="accent-green">Your worst case is $0 and two weeks.</span></div></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹</button>
+  <div class="count"><span id="cur">1</span> / <span id="total">11</span></div>
+  <button id="next" aria-label="Next">›</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dotsWrap=document.getElementById('dots');
+let i=0;
+slides.forEach((_,n)=>{const d=document.createElement('span');if(n===0)d.className='on';d.onclick=()=>go(n);dotsWrap.appendChild(d);});
+const dots=[...dotsWrap.children];
+document.getElementById('total').textContent=slides.length;
+function go(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+  document.getElementById('cur').textContent=i+1;
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===slides.length-1;
+  document.querySelector('.brandmark').style.display=(i===0)?'block':'none';
+  slides[i].scrollTop=0;
+}
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1);}
+  if(e.key==='ArrowLeft'){go(i-1);}
+});
+go(0);
+
+const rates={USD:1,EUR:0.92,GBP:0.79};
+const sym={USD:'$',EUR:'€',GBP:'£'};
+let cur='USD';
+function bindSeg(id,cb){
+  const wrap=document.getElementById(id);
+  wrap.addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    [...wrap.children].forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');cb(b.dataset.v);calc();
+  });
+}
+bindSeg('seg-level',()=>{});
+bindSeg('seg-cur',v=>cur=v);
+document.getElementById('salary').addEventListener('input',calc);
+document.getElementById('hires').addEventListener('input',calc);
+function fmt(n){return sym[cur]+Math.round(n).toLocaleString('en-US');}
+function calc(){
+  const monthly=Math.max(0,+document.getElementById('salary').value||0);
+  const hires=Math.max(1,Math.floor(+document.getElementById('hires').value||1));
+  const annual=monthly*12;
+  const perLow=annual*0.10, perHigh=annual*0.20;
+  const totLow=perLow*hires, totHigh=perHigh*hires;
+  document.getElementById('bignum').textContent='up to '+fmt(totHigh);
+  document.getElementById('agencyPerRole').textContent=fmt(perLow)+' – '+fmt(perHigh);
+  document.getElementById('agencyTotal').textContent=fmt(totLow)+' – '+fmt(totHigh);
+  document.getElementById('rolesLbl').textContent='× '+hires+(hires===1?' role':' roles');
+}
+calc();
+</script>
+</body>
+</html>
